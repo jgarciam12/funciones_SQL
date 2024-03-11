@@ -1,0 +1,1259 @@
+CREATE TABLE tienda.cliente (
+idCliente int not null auto_increment,
+nombre varchar(45) default null,
+apellido varchar(45) default null,
+telefono varchar(45) default null,
+email varchar(45) default null,
+ciudad varchar(45) default null,
+pais varchar(45) default null,
+primary key (idCliente)
+) engine = InnoDB default charset = utf8mb4;
+select * from tienda.producto;
+
+select idproducto, nombre
+from tienda.producto
+where precioUnitario < 2.30 and idCategoria = 2;
+
+select idproducto, nombre
+from tienda.producto
+where precioUnitario < 2.3 or idCategoria = 2;
+
+select *
+from tienda.producto
+where idCategoria != 2;
+
+select *
+from tienda.producto
+where idCategoria is not null;
+
+select *
+from tienda.producto
+where precioUnitario < 2.30 xor idCategoria = 2;
+
+select * from tienda.empleado
+where salario > 500;
+
+select * from tienda.empleado
+where salario < 500;
+
+select * from tienda.empleado
+where salario >= 500;
+
+select * from tienda.empleado
+where salario <> 500;
+
+select * from tienda.empleado
+where salario between 500 and 700;
+
+select * from tienda.empleado
+where fechaIngreso between '2018-01-20' and '2018-12-31';
+
+select * from tienda.empleado
+where salario not between 500 and 700;
+
+select * from tienda.empleado
+where fechaIngreso not between '2018-01-20' and '2018-12-31';
+
+
+create table tienda.factura (
+idFactura int not null auto_increment,
+fecha datetime default null,
+idCliente int default null,
+idEmpleado int default null,
+primary key (idFactura)
+) engine = InnoDB default charset = utf8mb4;
+
+create table tienda.detalle_factura (
+idDetalle int not null auto_increment,
+idFactura int default null,
+idProducto int default null,
+precioUnitario decimal(10,2) default null,
+cantidad int default null,
+primary key (idDetalle)
+) engine = InnoDB default charset = utf8mb4;
+
+create table tienda.departamento (
+idDepartamento int not null auto_increment,
+nombre varchar(45) null,
+primary key (idDepartamento)
+) engine = InnoDB default charset = utf8mb4;
+
+select *
+from tienda.cliente
+where telefono is not null;
+
+select *
+from tienda.cliente
+where telefono is null;
+
+select *
+from tienda.cliente
+where isnull(telefono);
+
+
+where nombre like '%Ave%';
+
+select *
+from tienda.producto
+where nombre like '%a';
+
+select *
+from tienda.producto
+where nombre like 'a%';
+
+select user();
+select @@hostname;
+alter user 'root@localhost'@'localhost' identified by 'J4vierc4m23*';
+
+
+
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario) values (1, 'Avena', 2, 2.0);
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario) values (2, 'Queso', 4, 6.0);
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario) values (3, 'Kiwi', 2, 0.5);
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario) values (4, 'Coco', 5, 2.3);
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario) values (5, 'Leche', 2, 2.2);
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario) values (6, 'Agua', 4, 1.5);
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario) values (7, 'Jugo de Naranja', 3, 1.8);
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario) values (8, 'Manzanas',5, 0.5);
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario) values (9, 'Peras', 5, 1.18);
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario) values (10, 'Uvas', 5, 3.5);
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario) values (11, 'Jugo de Manzana', 3, 1.6);
+
+
+CREATE TABLE tienda.empleado (
+idEmpleado int not null auto_increment,
+nombre varchar(45) default null,
+apellido varchar(45) default null,
+fechaIngreso date DEFAULT NULL,
+fechaNacimiento date DEFAULT NULL,
+sexo ENUM('hombre','mujer') DEFAULT NULL,
+email varchar(45) DEFAULT NULL,
+telefono varchar(45) DEFAULT NULL,
+salario decimal(10,2) DEFAULT NULL,
+idDepartamento int NULL,
+PRIMARY KEY (idEmpleado))
+ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
+select curdate();
+
+select now();
+
+select localtime();
+
+select localtimestamp();
+
+select str_to_date('09 Aug, 2019', '%d %M, %Y');
+
+
+select date('2019-08-07 23:21:35') as fecha;
+
+select date(now()) as fecha;
+
+select datediff('2019-08-07', '2019-08-06');
+
+
+
+select concat(nombre, ' ', apellido) as nombre from tienda.empleado;
+
+select concat_ws(' ', nombre, apellido) as nombre from tienda.empleado;
+
+select * from tienda.producto;
+
+select instr(nombre, 'N') as posicion
+from tienda.producto
+where idProducto;
+
+select nombre, length(nombre) as longitud
+from tienda.producto;
+
+
+select ltrim('   Texto con espacios');
+
+select rtrim('Texto con espacios  ');
+
+select trim(' Texto con espacios     ');
+
+select lower(nombre)
+from tienda.producto;
+
+select upper(nombre)
+from tienda.producto;
+
+
+select * from tienda.empleado;
+
+select nombre, cast(fechaIngreso as datetime)
+from tienda.empleado;
+
+select cast(now() as date); -- comentario
+/* comentario */
+
+select nombre, cast(salario as char) as texto /*convertimos el salario a tipo string */
+from tienda.empleado;
+
+select convert('20181208', date) as date; /*convertimos un string a formato date*/
+
+
+select aes_encrypt('micontraseña', 'key'); -- encriptamos
+
+select aes_decrypt(aes_encrypt('micontraseña', 'key'), 'key'); -- desencriptamos
+
+select md5('micontraseña'); -- otra manera de encriptar con 32 digitos hexadecimales
+
+select sha('micontraseña');
+
+select sha2('micontraseña', 224);
+
+
+# FUNCIONES DE INFORMACIÓN EN MYSQL
+select database(); -- muestra la base de datos que estamos usando
+
+select user(); -- nos muestra el usuario que estamos usando
+
+select version(); -- nos muestra la versión que estamos usando
+
+select * from tienda.cliente;
+select found_rows(); -- nos muestra el número de filas de última consulta
+
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario)
+values ('12', 'Arroz', '2', '4'); # insertamos un nuevo registro
+
+select last_insert_id(); # muestra el último id insertado
+
+select * from tienda.producto;
+
+insert into tienda.producto (idproducto, nombre, idCategoria, precioUnitario)
+values ('13', 'Ciruela', '6', '2'); # insertamos un nuevo registro
+
+select row_count(); # nos indica que fue una fila insertada
+
+
+# SUMA Y CONTEO DE VALORES MYSQL
+select * from tienda.detalle_factura;
+
+select sum(cantidad) as total 
+from tienda.detalle_factura;
+
+select sum(cantidad) as total 
+from tienda.detalle_factura
+where idProducto = 2;
+
+select count(*) as productos
+from tienda.producto;
+
+select count(*) as productos
+from tienda.producto
+where idCategoria = 2;
+
+select count(distinct idCategoria)
+from tienda.producto;
+
+# PROMEDIOS, MÁXIMOS Y MÍNIMOS
+
+SELECT AVG(precioUnitario)
+from tienda.producto;
+
+SELECT min(precioUnitario)
+from tienda.producto;
+
+SELECT max(precioUnitario)
+from tienda.producto;
+
+select least(3, 5, 7, 9) as resultado;
+
+
+# AGRUPACIONES POR GROUPBY
+select pais from tienda.cliente
+group by pais;
+
+select idFactura, sum(precioUnitario * cantidad) as total
+from tienda.detalle_factura
+group by idFactura;
+
+select idCliente, count(idFactura) as facturas
+from tienda.factura
+group by idCliente;
+
+
+# OPCIONES PARA EL AGRUPAMIENTO
+
+select idCliente, count(idFactura) as facturas
+from tienda.factura
+group by idCliente with rollup; # nos muestra el total
+
+select
+if(grouping(idCliente), 'Total', idCliente) as cliente, #nos ayuda a mostrar el null como total donde efectivamente es el total
+count(idFactura) as facturas
+from tienda.factura
+group by idCliente with rollup;
+
+select idCategoria, group_concat(idProducto) as producto #me agrupa cada elemento separado por comas
+from tienda.producto
+group by idCategoria;
+
+select idfactura, sum(precioUnitario * cantidad) as total
+from tienda.detalle_factura
+group by idFactura
+having total > 14; # esta funcion me muestra las agrupaciones que cumplen la condicion
+
+
+# ORDERBY
+
+SELECT  nombre, apellido
+from tienda.cliente
+order by apellido asc;
+
+SELECT  nombre, apellido
+from tienda.cliente
+order by apellido desc;
+
+SELECT  nombre, apellido
+from tienda.cliente
+order by rand(); # rand ordena aleatoriamente
+
+
+# LIMIT Y OFSET
+
+select *
+from tienda.empleado
+order by fechaIngreso
+limit 2; # limit me permite traer solo cierto numero de filas
+
+select *
+from tienda.producto
+order by idproducto
+limit 3, 4; # podemos decirle a partir de qué fila y la cantidad después de esa fila
+
+select *
+from tienda.producto
+order by idproducto
+limit 4 offset 3;
+
+
+# UNIONES
+
+SELECT  categoria.nombre as categoria,
+producto.nombre as producto
+from tienda.producto
+inner join tienda.categoria on categoria.idCategoria = producto.idCategoria;
+
+select factura.idFactura as factura,
+cliente.nombre as cliente,
+empleado.nombre as empleado
+from tienda.factura
+inner join tienda.cliente on cliente.idCliente = factura.idCliente
+inner join tienda.empleado on empleado.idEmpleado = factura.idEmpleado
+order by factura.idFactura;
+
+select * from tienda.cliente
+cross join tienda.factura; #el cross join multiplica las filas de una tabla * las filas de la otra
+
+select 
+cliente.nombre as cliente,
+factura.idFactura as factura
+from tienda.cliente
+left join tienda.factura on cliente.idCliente = factura.idCliente
+order by cliente.nombre; 
+
+select 
+cliente.nombre as cliente,
+factura.idFactura as factura
+from tienda.cliente
+left join tienda.factura on cliente.idCliente = factura.idCliente
+where factura.idFactura is null
+order by cliente.nombre; 
+
+select factura.idFactura as factura,
+idProducto as producto
+from tienda.factura
+left join tienda.detalle_factura on factura.idFactura = detalle_factura.idFactura;
+
+select factura.idFactura as factura,
+idProducto as producto
+from tienda.factura
+left join tienda.detalle_factura on factura.idFactura = detalle_factura.idFactura
+and factura.idFactura = 1; # nos muestra solo las facturas 1, para los demás null
+
+select 
+factura.idFactura as factura,
+cliente.nombre as cliente,
+detalle_factura.idProducto as producto
+from tienda.cliente
+left join tienda.factura on factura.idCliente = cliente.idCliente
+left join tienda.detalle_factura on detalle_factura.idFactura = factura.idFactura
+order by cliente.nombre, factura asc;
+
+select 
+cliente.nombre as cliente,
+factura.idFactura
+from tienda.cliente
+right join tienda.factura on factura.idCliente = cliente.idCliente
+order by factura.idFactura;
+
+select factura.idFactura as factura,
+empleado.nombre as empleado
+from tienda.factura
+right join tienda.empleado on factura.idEmpleado = empleado.idEmpleado
+order by factura.idFactura;
+
+select 
+detalle_factura.idFactura as factura,
+producto.nombre as producto,
+detalle_factura.cantidad as canbtidad
+from tienda.detalle_factura
+right join tienda.producto on detalle_factura.idProducto = producto.idProducto
+order by factura;
+
+SELECT * 
+from tienda.factura
+natural join tienda.detalle_factura; # el natural join busca la unión por las columnas comunes
+
+select *
+from tienda.factura
+natural join tienda.cliente
+order by cliente.idCliente;
+
+select 
+cliente.idCliente as id,
+cliente.nombre as nombre,
+factura.idfactura as factura
+from tienda.cliente
+left join tienda.factura using(idCliente)
+where idCliente = 1;
+
+
+select 
+cliente.idCliente as id,
+cliente.nombre as nombre,
+factura.idfactura as factura
+from tienda.cliente
+left join tienda.factura on factura.idCliente = cliente.idCliente
+and cliente.idCliente = 1;
+
+# SUBQUERYS
+
+SELECT idEmpleado, nombre, salario
+from tienda1.empleado
+where salario > (select avg(salario) from tienda1.empleado);
+
+select nombre, apellido, idDepartamento
+from tienda1.empleado
+where idDepartamento not in (select idDepartamento from tienda1.departamento where nombre like '%general%');
+
+select idCliente, idFactura
+from tienda1.factura
+where idCliente in (select idCliente from tienda1.cliente where pais = 'Canadá' or pais = 'Brasil');
+
+
+# COMPARACIONES USANDO SUBCONSULTAS
+
+select *
+from  tienda1.factura
+where idCliente = (select idCliente from tienda1.cliente  where nombre = 'Jordi');
+
+
+select *
+from tienda1.producto 
+where precioUnitario <=
+(select avg(precioUnitario) from tienda1.producto where idCategoria = 5)
+and idCategoria = 5; 
+
+# SUBQUERYS CON ANY, ALL O SOME
+
+select idProducto, nombre
+from tienda1.producto
+where idProducto = any (select idProducto from tienda1.detalle_factura); #alguno que cumpla la condición
+
+select idFactura, idproducto, (cantidad * precioUnitario) as total
+from tienda1.detalle_factura
+where idProducto = some (select idProducto from tienda1.producto where idCategoria in(1,2)); #some es sinónimo de any
+
+select idCategoria, avg(precioUnitario) as precioUnitario
+from tienda1.producto
+group by idCategoria
+having avg(precioUnitario) >= all (select avg(precioUnitario) from tienda1.producto group by idCategoria);
+
+# SUBQUERYS CON NOT IN, IN
+
+SELECT * FROM tienda1.factura
+where idCliente in
+(select idCliente from tienda1.cliente where pais in ('Honduras', 'Estados Unidos', 'Colombia'))
+order by idFactura;
+
+
+select *
+from tienda1.producto
+where idCategoria not in
+(select idCategoria
+from tienda1.categoria
+where descripcion like '%maiz%' or descripcion like '%queso%');
+
+
+# SUBQUERYS CON EXISTS O NOT EXISTS
+# podemos insertar valores en una tabla que son consultas de subquerys
+
+# vamos a seleccionar el idCliente y nombre de aquellos clientes que tengan facturas asociadas
+SELECT idCliente, nombre
+from tienda1.cliente
+where exists (select * from tienda1.factura where factura.idCliente = cliente.idCliente);
+
+
+select # este query me muestra los productos que no han tenido todavía ventas
+	p.idProducto,
+    p.nombre as producto,
+    c.nombre as categoria
+from tienda1.producto as p
+left join tienda1.categoria as c using(idCategoria)
+where not exists (select * from tienda1.detalle_factura where detalle_factura.idProducto  = p.idProducto);
+
+
+# INSERT INTO SELECT
+
+CREATE TABLE tienda1.asociacion (
+	idAsociacion int not null auto_increment,
+	idEmpleado int not null,
+	nombre varchar(45) null,
+	apellido varchar(45) null,
+    fechaIngreso date null,
+	email varchar(45) null,
+	telefono varchar(45) null,
+	primary key (idAsociacion))
+default character set = utf8mb4;
+
+alter table tienda1.asociacion
+add index FK_EMP_ASO_idx (idEmpleado asc) visible;
+;
+
+alter table tienda1.asociacion
+add constraint FK_EMP_ASO
+	foreign key (idEmpleado)
+    references tienda1.empleado (idEmpleado)
+    on delete restrict
+    on update cascade;
+    
+    
+insert into tienda1.asociacion (idEmpleado, nombre, apellido, fechaIngreso, email, telefono)
+select idEmpleado, nombre, apellido, fechaIngreso, email, telefono
+from tienda1.empleado
+where fechaIngreso < '2019-01-01';
+
+
+# EL USOS DE UNIONES
+select idEmpleado as id, nombre, apellido, email, 'Empleado' as 'Tipo Usuario'
+from tienda1.empleado
+union select idCliente as id, nombre, apellido, ifnull(email, telefono) as contacto, 'Cliente' as 'Tipo Usuario'
+from tienda1.cliente;
+
+
+# CREAR PROCEDIMIENTOS ALMACENADAOS
+# Previamente hemos creado un procedimiento en Stored Procedures y lo vamos a llamar.
+# Los procedimientos se crean para hacer tareas repetitivas
+
+CALL pro_productosCategoria(2);
+CALL pro_productosCategoria(4);
+
+
+# USO DE OUT EN LOS PROCEDIMIENTOS ALMACENOS
+# El parametro OUT devuelve un valor a la persona que invoca el procedimiento.
+call pro_salarioMinimo(@salario);
+select @salario;
+
+
+# USO DE INOUT EN LOS PROCEDIMIENTO ALMACENADOS
+# INOUT puede ser inicializado con un parametro antes de invocar el procedimiento, dicho parametro puede ser modificado en el procedimiento
+
+set @idDepartamento = 1;
+call pro_numEmpleadosDepartamento (@idDepartamento);
+select @idDepartamento as 'Numero de empleados';
+
+# ACTUALIZAR Y ELIMINAR PROCEDIMIENTOS
+
+call pro_salarioMinimo(@salarioMinimo);
+select @salarioMinimo;
+
+set @idDepartamento = 3;
+call pro_numeroEmpleadosDepartamento (@idDepartamento);
+select @idDepartamento;
+
+drop procedure pro_productosCategoria;
+
+# INSERTAR, ACTUALIZAR Y ELIMINAR REGISTROS POR MEDIO DE LOS PROCEDIMIENTOS ALMACENADOS
+
+call pro_insertarProducto('Banana', 5, 0.20);
+
+
+# MANEJO DE EXEPCIONES EN LOS PROCEDIMIENTOS ALMACENADOS
+# podemos tener errores entregados por los procedimientos, por falta de contemplaciones
+# los errores los podemos manejar con handler, que nos ayudan a manejar errores
+
+CALL pro_insertarProducto('Banana', 8, 0.2); #aquí vamos a generar un error porque no existe la categoria 8 en la tabla categoria
+# podemos manejar en el procedimiento almacenado 
+CALL pro_insertarProducto('Banana', 8, 0.2); # ahora nos aparece el mensaje que programamos
+
+
+# USO DE LOS CURSORES EN LOS PROCEDIMIENTOS
+# los cursores nos sirven solo para lectura y no actualización
+call pro_productoPrecio(6);
+
+# FLUJOS DE CONTROL IF DENTRO DE LOS PROCEDIMIENTOS ALMACENADOS
+
+call pro_nivelVentas(3, @nivelVentas);
+select @nivelVentas;
+
+call pro_nivelVentas(5, @nivelVentas);
+select @nivelVentas;
+
+# FLUJO DE CONTROL CASE DENTRO DE LOS PROCEDIMIENTOS ALMACENADOS
+# El case es similar al if pero nos permite evaluar muchas condiciones al mismo tiempo
+
+call pro_aumentoSalarial(1, @aumento);
+select @aumento;
+
+call pro_aumentoSalarial(5, @aumento);
+select @aumento;
+
+# CICLO LOOP EN LOS PROCEDIMIENTOS ALMACENADOS
+
+call pro_aplicarAumento();
+
+# CICLO REPEAT EN LOS PROCEDIMIENTOS
+# El ciclo repeat es un bucle que se repite hasta que una expresión sea verdadera.
+
+set @sumatoria = 3;
+call pro_sumatoria(@sumatoria);
+select @sumatoria;
+
+
+# CICLO WHILE EN LOS PROCEDIMIENTOS
+
+set @factorial = 5;
+call pro_factorial(@factorial);
+select @factorial;
+
+# CREAR DISPARADORES ANTES Y DESPUÉS DEL INSERT
+# Los disparadores o trigger están relacionados con una tabla y se activan cuando
+# se inserta, actualiza o elimina un registro de la tabla.
+
+# Creamo un trigger que asegure la primera Letra y apellido del empleado sea en mayusucla
+ #cuando un trigger tiene más de dos líneas hay que colocar un delimiter
+delimiter //
+CREATE trigger empleado_BEFORE_INSERT before insert on tienda1.empleado for each row
+begin
+	set new.nombre = concat(upper(substring(new.nombre,1,1)), substring(new.nombre,2));
+	set new.apellido = concat(upper(substring(new.apellido,1,1)), substring(new.apellido,2));
+end; //
+delimiter ;
+
+# los triggers, los usamos para validación de datos, cambiarlos, etc.
+
+# ACTUALIZAR Y ELIMINAR TRIGGERS
+
+SHOW TRIGGERS;
+
+DROP trigger empleado_BEFORE_INSERT;
+
+
+# CREAR DISPARADORES ANTES O DESPUÉS DEL UPDATE
+
+# los disparadores nos ayudan a maneter la integridad de la data
+
+# CREAR DISPARADORES ANTES DEL DELETE
+
+# podemos eliminar registros que dependen de llaves foraneas eliminandolo de todas las tablas
+
+# CREAR Y DETENER EVENTOS
+# Los eventos son tareas que se ejecutan de acuerdo a un cronograma
+show processlist;
+# sino tenemos habilitada una opcion, ejecutamos la siguiente linea de codigo y luego nuevamente la anterior
+
+set global event_scheduler = on;
+# si queremos apagarla ejecutamos la siguiente linea
+set global event_scheduler = off;
+
+# llenamos una tabla cada dos segundos con un token
+create event if not exists ev_token
+on schedule every 2 second
+do insert into token (token) values (md5(now()));
+
+# si queremos detener el evento
+alter event ev_token disable;
+
+# si queremos eliminar el evento
+
+drop event ev_token;
+
+# CREAR VISTAS
+
+create view vw_ventas as
+select 
+	idFactura,
+    idProducto,
+    precioUnitario,
+    cantidad
+from detalle_factura;
+
+select * from cw_listasclientes;
+
+# EDITAR Y ELIMINAR VISTAS
+
+select * from vw_ventas;
+
+drop view if exists vw_listaclientes;
+
+# CREAR VISTAS CON ALGORITMO MERGE
+# el algoritmo merge nos permite que las vistas creen indices y no crea tablas temporales
+
+create algorithm = merge view vw_contactoempleado (
+	id,
+    nombreEmpleado,
+    apellidoEmpleado,
+    telefonoEmpleado,
+    emailEmpleado)
+    as
+		select idEmpleado, nombre, apellido, telefono, email
+        from empleado;
+
+select * from vw_contactoempleado
+where nombreEmpleado like '%al%';
+
+update vw_contactoempleado
+set telefonoEmpleado = '999 234 234'
+where id = 6;
+
+# CREAR FUNCIONES ALMACENADAS
+# la diferencia entre las funciones y los procedimientos es que las funciones solo pueden recibir 
+# parámetros de tipo INT, y no OUT ni INOUT
+delimiter //
+create function fc_edad(fecha date)
+returns integer deterministic 
+begin
+	declare edad int;
+	set edad = floor(datediff(now(), fecha)/365);
+	return edad;
+end; //
+delimiter ;
+
+select idEmpleado, nombre, apellido, fc_edad(fechaNacimiento) as edad
+from tienda1.empleado;
+
+select idProducto, nombre, fnc_nivelVentas(idProducto)
+from producto;
+
+# EDITAR FUNCIONES ALMACENADAS
+
+select idProducto, nombre, fnc_nivelVentas(idProducto)
+from producto;
+
+drop function fc_edad;
+
+# CREAR VALORES JSON
+# ventajas es que tenemos validación automática de documentos JSON almacenados en columnas JSON.
+# Además el proceso de almacenamiento es almacenado
+
+insert into tienda1.proveedor (contacto)
+values ('{"nombre": "Hernan",
+"apellido": "Torres",
+"email": "HTorres@hinetecoinc.com",
+"teléfono": "(210)2655125",
+"estado":"Texas"}');
+
+# BUSQUEDAD DE VALORES JSON
+
+select idProveedor, contacto -> '$.nombre' as nombre
+from tienda1.proveedor;
+
+select *
+from tienda1.proveedor
+where json_contains(contacto, '"Texas"', '$.estado');
+	
+# queremos verificar si existe una ruta o propiedad dentro del JSON
+select json_contains_path(contacto, 'one', '$.email') #si existe al menos una ruta nos va a devolver uno o cero en caso contrario
+from tienda1.proveedor;
+
+# vamos a mostrar el nombre del contacto y el email usando otra función
+select idProveedor, JSON_UNQUOTE(JSON_EXTRACT(contacto, "$.nombre")) as nombre,
+JSON_UNQUOTE(JSON_EXTRACT (contacto, "$.email")) as email
+from tienda1.proveedor;
+
+# buscamos el path dado un valor
+SELECT JSON_SEARCH(contacto, 'all', 'Hernan') as ruta
+from tienda1.proveedor
+group by ruta;
+
+# MODIFICAR VALORES JSON
+
+select *
+from tienda1.proveedor where idProveedor = 55;
+
+update tienda1.proveedor
+set contacto = JSON_SET(contacto, '$.teléfono', '(525)387-0504')
+where idProveedor = 55;
+
+select * from tienda1.proveedor where idProveedor = 3;
+
+update tienda1.proveedor
+set contacto = JSON_SET(contacto, '$.apellido', 'Rojas', '$.email', 'ERojas@kinetecoinc.com')
+where idProveedor = 3;
+
+# vamos a insertar una propiedad mas al siguiente proveedor
+select * from tienda1.proveedor where idproveedor = 1;
+
+update tienda1.proveedor
+set contacto = JSON_INSERT(contacto, '$.nota', 'Revisar el pedido')
+where idProveedor = 1;
+
+
+# DEVOLVER ATRIBUTOS JSON
+# función que nos devuelve la cantidad de atributos o propiedades
+select JSON_LENGTH(contacto)
+from tienda1.proveedor
+where idProveedor = 1;
+
+# nos muestra el tipo de variable
+select JSON_TYPE(contacto)
+from tienda1.proveedor
+where idProveedor = 2;
+
+# el tipo de un atributo en especifico
+select JSON_TYPE(JSON_EXTRACT(contacto, '$.email'))
+from tienda1.proveedor
+where idproveedor = 2;
+
+# validados si un documento es un JSON valido o no
+select JSON_VALID(contacto)
+from tienda1.proveedor
+where idProveedor = 2;
+
+select JSON_VALID ('hola');
+
+# TABLAS JSON
+SELECT tb_contacto.*
+from tienda1.proveedor,
+	json_table (contacto,
+    '$' columns (
+		nombre varchar (100) path '$.nombre',
+        apellido varchar (100) path '$.apellido',
+        email varchar (100) path '$.email',
+        teléfono varchar (100) path '$.teléfono',
+        estado varchar (100) path '$.estado'
+        )
+) as tb_contacto
+where estado = 'California';
+
+# FUNCIONES DE UTILIDAD PARA EL MANEJO DE JSON
+
+select contacto -> '$.email' as email
+from tienda1.proveedor;
+
+select contacto ->> '$.email' as email
+from tienda1.proveedor;
+
+select JSON_MERGE_PATCH(contacto, '{"nota": "Llamar a proveedor"}') # le agregamos una nueva propiedad al JSON
+from tienda1.proveedor
+where idproveedor = 2;
+
+
+select *
+from tienda1.proveedor
+where idProveedor = 1;
+
+
+select JSON_REMOVE(contacto, '$.nota') # este cambio solo es visual, pero podemos dejarlo permanente
+from tienda1.proveedor
+where idProveedor = 1;
+
+update tienda1.proveedor 
+set contacto = JSON_REMOVE(contacto, '$.nota')
+where idProveedor = 1;
+
+select *
+from tienda1.proveedor
+where idProveedor = 1;
+
+# TRANSACCIONES
+# son unidades atómicas que pueden configurarse o revertirse, cuando una transacción
+# realiza múltiples cambios en las bases de datos, todos los cambios tienen éxito
+# cuando se confirma la transacción ó todos los cambios se deshacen cuando la transacción se revierte
+
+select @@autocommit; #está por defecto configurado en verdadero. 
+# cuando hacemos un insert, update o delete no se pueden revertir los cambios si el autocommit está en verdadero
+
+set autocommit = 1; # se habilita con 1 y con cero se deshabilita
+
+select *
+from tienda1.producto
+where idProducto = 12;
+
+start transaction;
+update tienda1.producto set nombre = "Arroz Integral" where idProducto = 12;
+select * from tienda1.producto where idProducto = 12;
+
+rollback; # nos permite devolver los cambios
+select * from tienda1.producto where idProducto = 12;
+
+commit; # nos confirma el cambio
+select * from tienda1.producto where idProducto = 12;
+
+# PUNTOS DE RECUPERACIÓN
+
+START transaction;
+
+savepoint sp_inicial;
+
+delete from tienda1.cliente where idCliente = 14;
+select * from tienda1.cliente;
+
+rollback to sp_inicial; # resupera las transacciones
+select * from tienda1.cliente;
+
+# BLOQUEO DE TABLAS
+LOCK TABLES cliente write;
+
+update cliente set email = 'pedrorojas@test.com' WHERE IDcLIENTE = 12;
+
+# EL MOTOR DE ALMACENAMIENTO MyISAM
+# un motor de almacenamiento se encarga de almacenar, manejar, y recuperar info de una tabla
+# MyISAM se basa en motor de almacenamiento ISAM más antiguo y ya no está disponible en MYSQL
+
+# NORMALIZACIÓN Y VENTAJAS
+# La normalización es un proceso de organizar los datos en una base de datos mediante el uso de una
+# serie de reglas con el fin de evitar redundancias. Redundancia cuando se almacena 2 veces los datps 
+# o se derivan de otros datos. Otra normalización es la integridad de los datos y la actualización de datos
+
+# SEGUNDA FORMA NORMAL
+# Establece que debemos cumplir con la primera forma normal, luego debemos quitar
+# todas las columnas que no dependan de la primera tabla y crear nuevas tablas con
+# estos atributos y establecer las llaves primarias correspondientes
+
+#TERCERA FORMA NORMAL
+# Tiene como fin quitar la inexactitud de los datos, agilizar los procesos ineficientes
+# que se llevan a cabo en nuestras bases de datos. La tercera forma establece que se debe
+# eliminar los atributis que presentan dependencias transitivas y crear una nueva tabla
+# con ellos 
+
+# FORMA NORMAL BOYCE-CODD
+# Es una versión ligeramente más fuerte que la tercera y tiene como fin quitar todas
+# las dependencias funcionales no triviales de los atributos que no sea un conjunto
+# de la clave candidata, es decir, que una tabla se considera en esta forma si, y solo si,
+# cada atributo es una llave candidata. Una tabla puede tener más de una llave candidata
+# y entre ellas podemos distinguir la clave primaria y la clave alternativa donde la llave
+# primaria identifica cada tupla de la tabla y la llave alternativa son todas aquellas claves
+# candidatas que no fueron seleccionadas como llave o clave primaria.
+
+# OPTIMIZACIÓN: VISIÓN GENERAAL
+# eliminamos las tablas que no estemos usando
+# agregar los formatos que son a las columnas
+
+# OPTIMIZAR LOS TIPOS DE DATOS
+# es preferible que las llaves primarias sean de tipo numérico
+# es mejor trabajar con datos not null
+
+
+# OPTIMIZAR EL TAMAÑO DE LOS DATOS
+# entre más pequeño sea el formato para los datos menos espacio ocupará
+
+# OPTIMIZAR LAS TABLAS
+
+optimize table tienda3.cliente;
+# repara la tabla
+# ordena los indices
+# si las estadísticas de la tabla no están actualizadas, las actualiza
+
+analyze table tienda.cliente;
+
+# LIMITES DE BASES DE DATOS, TABLAS, COLUMNAS Y FILAS
+# Innobd permite hasta 4mil millones de tablas
+# una tabla puede tener un maximos de 1017 columnas
+# una tabla puede tener 64 indices secundarios
+# la representación de tamaño de fila tiene una máximo de 65535 bytes
+
+# OPTIMIZAR SENTENCIAS SELECT
+# llamar solo las columnas necesarias
+SELECT * FROM tienda1.cliente;
+
+# OPTIMIZACIÓN DE LOS JOIN
+select nombre, apellido
+from tienda1.empleado
+where idDepartamento in (select idDepartamento from tienda1.departamento where nombre = 'Góndolas');
+# es la misma consulta anterior solo que más rápido
+select empleado.nombre, empleado.apellido
+from tienda1.empleado 
+join tienda1.departamento on departamento.idDepartamento = empleado.idDepartamento
+where departamento.nombre = 'Góndolas';
+
+# OPTIMIZACIÓN DE GROUP BY Y DISTINCT
+# la mejor forma de usar un groupby es utilizar un índice para otimizarlas
+explain SELECT idProducto, sum(cantidad) as CantidadTotal
+from tienda1.detalle_factura
+group by idProducto;
+
+explain select idCategoria, sum(precioUnitario) as precio
+from tienda1.producto
+group by idCategoria;
+
+select distinct idProducto
+from tienda1.detalle_factura;
+
+select distinct idCategoria
+from tienda1.producto;
+
+# OPTIMIZAR LIMIT Y OFFSET 
+Select idProducto, nombre, precioUnitario
+from tienda1.producto
+where precioUnitario > 7
+limit 5 offset 2;
+
+# OPTIMIZAR IS NULL Y ORDER BY
+explain Select idEmpleado, nombre, apellido, idDepartamento
+from tienda1.empleado
+order by idEmpleado;
+
+explain Select idEmpleado, nombre, apellido, idDepartamento
+from tienda1.empleado
+order by idDepartamento;
+
+explain select idCliente, nombre, apellido 
+from tienda1.cliente 
+where telefono is null;
+
+# OPTIMIZAR SUBQUERYS
+
+SELECT e.idEmpleado, e.nombre, e.apellido, 
+(select d.nombre from tienda1.departamento as d where d.idDepartamento = e.idDepartamento)
+from tienda1.empleado as e;
+# esta subconsulta la convertimos en un join para ver que es mucho más rápido
+select e.idEmpleado, e.nombre, e.apellido, d.nombre
+from tienda1.empleado as e
+join tienda1.departamento as d on d.idDepartamento = e.idDepartamento;
+# no siempre son negativos los subquerys, a veces son necesarios
+select p.idProducto, p.nombre, d.cantidadTotal
+from tienda1.producto as p
+inner join (select idProducto, sum(cantidad) as cantidadTotal from tienda1.detalle_factura group by idProducto) as d
+on p.idProducto = d.idProducto;
+# en este caso el query que tiene un subquery es necesario hacerlo de ésta forma
+
+# OPTIMIZAR UNIONES
+SELECT idProducto, nombre, precioUnitario
+from tienda1.producto
+where idCategoria = 1 or idCategoria = 5;
+# La unión es más rápida que el or
+select idProducto, nombre, precioUnitario
+from tienda1.producto
+where idCategoria = 1
+union all
+select idProducto, nombre, precioUnitario
+from tienda1.producto 
+where idCategoria = 5;
+
+# OPTIMIZAR INTERCAMBIO DE DATOS
+# siempre es reomendable hacer insert múltiples que hacer insert por separado
+insert into tienda1.producto (nombre, precioUnitario, idCategoria)
+values ('Kiwi', 8.77,8), ('Coco', 5.77, 8), ('Jugo de Naranja', 2.8,1);
+
+# USO CORRECTO DE LOS ÍNDICES
+# Es más rápido buscar datos por el índice
+
+# OPTIMIZAR LLAVES PRIMARIAS
+
+# OPTIMIZAR LLAVES FORANEAS
+# Mejoran el rendimiento de las bases de datos y refuerza la integridad de los datos
+
+# INDICES B-TREE Y HASH
+# El B-Tree, o árbols equilibrado, es el tipo de índice más común por su combinación
+# única de flexibilidad y un buen rendimiento general. Los B-Tree tienen muchas claves por
+# nodo y no crecen tan altos o profundos como un árbol binario. Se puede usar un índice B-Tree
+# para comparaciones de columnas en expresiones que usan los operadores igual, mayor, mayor igual,
+# menor, menor igual o between. El índices también se puede usar para comparaciones Like si el argumento
+# like es una cadena constante que no comienza con caracter comodín. Ejemplo:
+SELECT idCliente, nombre, apellido, telefono from tienda1.cliente
+where nombre like 'Est%';
+
+# en cuanto a los índices HASH se usan solo para comparaciones de igualdad que usan los operadores igual
+# o diferente. El otimizados no puede usar un índice HASH para acelerar las operaciones ORDER BY solo 
+# se pueden usar claves completas para buscar una fila. Con un índice BTREE, cualquier prefijo situado
+# más a la izquierda se puede utilizar para buscar filas. 
+
+
+# INDICES VISIBLES
+
+# OPTIMIZAR TABLAS INNODB
+# Este motor de Datos es usando donde la confiabilidad y la concurrencia son importante.
+# Una vez que los datos alcanzan un tamaño estable o una tabla en crecimiento haya aumentado
+# en decenas o algunos cientos de megas, se debe considerar usar el query;
+OPTIMIZE TABLE tienda1.factura;
+ANALYZE TABLE tienda1.factura;
+# para reorganizar la tabla y compactar cualquier espacio desperdiciado
+# Las tablas reorganizadas requieren menos entradas y salidas de disco para
+# realizar análisis complejos en la tabla. OPTIMIZE copia la parte de los datos
+# y reconstruye los índices. Los beneficios provienen de un empaquetado mejorado
+# de datos dentro de los índices y una fragmentación reducida dentro del espacio 
+# de tabla y en el disco
+
+# OPTIMIZAR TABLAS MyISAM
+
+# DIAGNOSTICO DE CONSULTAS CON EXPLAIN
+# explain nos devuelve una fila con la información de la declaración creada
+Explain select * from tienda1.cliente;
+
+Explain select * from tienda1.cliente where idCliente  > 'texto';
+show warnings;
+
+# FOARMATO DE SALIDA EXPLAIN
+explain select factura.idCliente,
+	factura.fecha,
+    detalle_factura.idProducto
+from tienda.factura
+left join tienda1.detalle_factura on factura.idFactura = detalle_factura.idFactura
+where factura.idFactura = 7;
+
+
+# ESTIMACION DEL RENDIMIENTO DE UNA CONSULTA
+
+EXPLAIN SELECT idEmpleado, nombre, apellido
+from tienda1.empleado
+where idDepartamento in (select idDepartamento from tienda1.departamento where nombre = 'Góndolas')
+order by nombre;
+
+# PANEL DE DESEMPEÑO DE MySQL
+
+
+# CASE
+select
+	case 2
+    when 1 then 'uno'
+    when 2 then 'dos'
+    else 'otro número'
+    end as valor;
+    
+SELECT idFactura, idProducto,
+case 	
+	when cantidad > 2 then 'Más de dos productos vendidos'
+    when cantidad = 2 then 'Dos productos vendidos'
+    else 'Menos de dos productos vendidos'
+end as cantidad
+from tienda1.detalle_factura;
+
+select nombre,
+case 
+	when email is null then 'No tiene email registrado'
+    else email
+end as email,
+pais
+from tienda1.cliente;
+
+
+select * from tienda1.detalle_factura;
+
+select idFactura, sum(precioUnitario * cantidad) 
+over(order by idFactura) as particion
+from tienda1.detalle_factura;
+
+select idFactura, sum(precioUnitario * cantidad) 
+over(partition by idFactura) as particion
+from tienda1.detalle_factura;
+
+select * from tienda1.categoria;
+
+select count(a.nombre) as 'Total Productos', b.nombre
+from tienda1.producto as a join tienda1.categoria as b on a.idCategoria = b.idCategoria
+group by b.nombre;
+
+SELECT * FROM tienda1.detalle_factura;
+SELECT * FROM tienda1.factura;
+
+select count(detalle_factura.idProducto) as Total, nombre
+from tienda1.detalle_factura join tienda1.producto on detalle_factura.idProducto = producto.idProducto
+join tienda1.factura on detalle_factura.idFactura = factura.idFactura
+where idEmpleado in (2,3) and year(fecha) = 2016
+group by nombre;
+
+select year(fecha) from tienda1.factura where month(fecha) = 6;
+
+select avg(precioUnitario) as promedio, idFactura
+from tienda1.detalle_factura
+group by idFactura;
+
+select * from tienda1.factura;
+
+select count(idCliente) as 'Total Clientes', month(fecha) as mes
+from tienda1.factura
+where year(fecha) = 2019
+group by mes;
+
+select idCliente from tienda1.cliente;
+
+select * from tienda1.detalle_factura;
+
+
+select count(idProducto) as 'Cantidad Productos', idCliente, idProducto
+from tienda1.detalle_factura join tienda1.factura using(idFactura) join tienda1.cliente using(idCliente)
+where year(fecha) = 2019
+group by idCliente, idProducto order by idCliente;
+
+with maximo as (
+	select
+		idCliente,
+        idProducto,
+        row_number() over (partition by idCliente order by count(*) desc) as Ranking
+	from tienda1.detalle_factura join tienda1.factura using(idFactura) join tienda1.cliente using(idCliente)
+	where year(fecha) = 2019
+	group by idCliente, idProducto
+)
+
+select idCliente, idProducto, Ranking from maximo where ranking = 1;
+
+
+
+# CONDICIÓN IF
+
+select if(1 < 2, true, false) as resultado;
+
+select if(1 > 2, true, false) as resultado;
+
+select idProducto,
+if(cantidad > 1, cantidad * precioUnitario, precioUnitario) as total
+from tienda1.detalle_factura;
+
+select 
+nombre,
+if(fechaIngreso < '2016-12-31', concat(idEmpleado, '-16'),
+	if(fechaIngreso < '2017-12-31', concat(idEmpleado, '-17'),
+		if(fechaIngreso < '2018-12-31', concat(idEmpleado, '-18'),
+			concat(idEmpleado, '-19')
+            )
+		)
+	) as codigo
+from tienda1.empleado;
+
+# IFNULL y NULLIF
+
+SELECT 	ifnull(null, 'texto') as resultado;
+
+select nombre, ifnull(email, telefono) as contacto
+from tienda1.cliente;
+
+select nombre,
+ifnull(	(select email from tienda1.cliente where idCliente = '14'), 'No tiene email registrado') as email
+from tienda1.cliente
+where idCliente = '14';
+
+select nombre,
+ifnull(email, 'No tiene email registrado') as email
+from tienda1.cliente
+where idCliente = '14';
+
+select nullif(1, 1); #en esta expreción devuelve el valor null si los dos parámetros son iguales y sino el primero
+
+select 
+nullif(
+	(select precioUnitario from tienda1.producto where idProducto = 1),
+    (select precioUnitario from tienda1.producto where idProducto = 2));
+    
+    
+    
+
+
+
+
+
+
